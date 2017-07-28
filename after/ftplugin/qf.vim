@@ -71,47 +71,59 @@ endif
 "   :Filter foo     <-- same as :Keep foo
 "   :Filter! foo    <-- same as :Reject foo
 command! -buffer -nargs=1 -bang Filter call qf#filter#FilterList(<q-args>, expand("<bang>") == "!" ? 1 : 0)
+command! -buffer -nargs=1 -bang QFFilter call qf#filter#FilterList(<q-args>, expand("<bang>") == "!" ? 1 : 0)
 
 " keep entries matching the argument
 " usage:
 "   :Keep foo
 command! -buffer -nargs=? Keep call qf#filter#FilterList(<q-args>, 0)
+command! -buffer -nargs=? QFKeep call qf#filter#FilterList(<q-args>, 0)
 
 " reject entries matching the argument
 " usage:
 "   :Reject foo
 command! -buffer -nargs=? Reject call qf#filter#FilterList(<q-args>, 1)
+command! -buffer -nargs=? QFReject call qf#filter#FilterList(<q-args>, 1)
 
 " restore the location/quickfix list
 " usage:
 "   :Restore
 command! -buffer -bar Restore call qf#filter#RestoreList()
+command! -buffer -bar QFRestore call qf#filter#RestoreList()
 
 " do something on each line in the location/quickfix list
 " usage:
 "   :Doline s/^/---
 command! -buffer -nargs=1 Doline call qf#do#DoList(1, <q-args>)
+command! -buffer -nargs=1 QFDoline call qf#do#DoList(1, <q-args>)
 
 " do something on each file in the location/quickfix list
 " usage:
 "   :Dofile %s/^/---
 command! -buffer -nargs=1 Dofile call qf#do#DoList(0, <q-args>)
+command! -buffer -nargs=1 QFDofile call qf#do#DoList(0, <q-args>)
 
 " save current location/quickfix list and associate it with a given name or the
 " last used name
 command! -buffer -nargs=? -complete=customlist,qf#namedlist#CompleteList SaveList    call qf#namedlist#SaveList(0, <q-args>)
+command! -buffer -nargs=? -complete=customlist,qf#namedlist#CompleteList QFSaveList    call qf#namedlist#SaveList(0, <q-args>)
 " like SaveList, but add to a potentially existing named list
 command! -buffer -nargs=? -complete=customlist,qf#namedlist#CompleteList SaveListAdd call qf#namedlist#SaveList(1, <q-args>)
+command! -buffer -nargs=? -complete=customlist,qf#namedlist#CompleteList QFSaveListAdd call qf#namedlist#SaveList(1, <q-args>)
 
 " replace location/quickfix list with named lists
 command! -buffer -nargs=+ -complete=customlist,qf#namedlist#CompleteList LoadList    call qf#namedlist#LoadList(0, <q-args>)
+command! -buffer -nargs=+ -complete=customlist,qf#namedlist#CompleteList QFLoadList    call qf#namedlist#LoadList(0, <q-args>)
 " like LoadList but append instead of replace
 command! -buffer -nargs=+ -complete=customlist,qf#namedlist#CompleteList LoadListAdd call qf#namedlist#LoadList(1, <q-args>)
+command! -buffer -nargs=+ -complete=customlist,qf#namedlist#CompleteList QFLoadListAdd call qf#namedlist#LoadList(1, <q-args>)
 
 " list currently saved lists
 command! -buffer ListLists call qf#namedlist#ListLists()
+command! -buffer QFListLists call qf#namedlist#ListLists()
 " remove given lists or all
 command! -buffer -nargs=* -bang -complete=customlist,qf#namedlist#CompleteList RemoveList call qf#namedlist#RemoveList(expand("<bang>") == "!" ? 1 : 0, <q-args>)
+command! -buffer -nargs=* -bang -complete=customlist,qf#namedlist#CompleteList QFRemoveList call qf#namedlist#RemoveList(expand("<bang>") == "!" ? 1 : 0, <q-args>)
 
 " TODO: allow customization
 " jump to previous/next file grouping
